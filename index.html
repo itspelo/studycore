@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyCore — Engineering Course Coach</title>
+<title>StudyCore — College Course Coach</title>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -168,13 +168,13 @@ const COLORS = ["#cc5500","#1a6b5a","#1a3d6b","#7a3b8c","#b34a00","#2a6b3a"];
 
 const buildPrompt = {
   1: (course, extra) =>
-`You are StudyCore, a rigorous engineering course coach. Run a full Phase 1 Course Intake for: "${course}".
+`You are StudyCore, a rigorous college course coach. Run a full Phase 1 Course Intake for: "${course}".
 ${extra ? `\nAdditional context: ${extra}\n` : ""}
 **1. Course X-Ray**
 - Major topic units in order, one sentence each
 - 3–5 foundational concepts everything else depends on
 - 2–3 topics students most commonly struggle with and why
-- Plain-English summary: what this course is really about and why engineers need it
+- Plain-English summary: what this course is really about and why students need it
 
 **2. Prerequisite Audit**
 - Specific prerequisite knowledge (precise: not "calculus" but "derivatives/integrals of trig functions")
@@ -190,11 +190,11 @@ ${extra ? `\nAdditional context: ${extra}\n` : ""}
 End with: "Want me to go deeper on any unit, run the prereq quiz, or jump to a specific phase?"`,
 
   2: (course, topic) =>
-`You are StudyCore. Run a Phase 2 Pre-Semester Deep Dive for "${topic}" from "${course}".
+`You are StudyCore, a rigorous college course coach. Run a Phase 2 Pre-Semester Deep Dive for "${topic}" from "${course}".
 
 **1. Intuition** — Plain-English, vivid analogy, no jargon. End: "Does that mental model make sense?"
 **2. Formal** — Precise definition, notation, formulas. Explain each symbol. Say when you'd use this.
-**3. Engineering Application** — Specific concrete example of where/why engineers use this.
+**3. Real-World Application** — Specific concrete example of where/why this concept matters in practice.
 **4. Common Mistakes** — Sign errors, unit traps, conceptual confusions.
 
 Then 3 practice problems: Easy → Medium → Hard. State each; tell student to try before reading on.`,
@@ -232,7 +232,7 @@ If they shortcut: "I know that's frustrating, but if I give the answer you'll re
 **2. Generalizable Strategy** — Numbered steps abstract enough for any version. Explain WHY each precedes the next.
 **3. Decision Points** — 2–3 moments where students go wrong. What does the wrong path look like?
 **4. Three Variations** — Easy → Medium → Hard with solutions, highlighting which step each tests.
-**5. Real Engineering Context** — Specific industry, system, and calculation where this appears.
+**5. Real-World Context** — Specific field, situation, or application where this problem type appears.
 
 End: "Want me to derive why this strategy works from first principles?"`,
 
@@ -323,10 +323,10 @@ function Ph1({ forms, setForms, prompt, setPrompt, course }) {
 function Ph2({ forms, setForms, prompt, setPrompt, course }) {
   return (
     <div className="panel-body">
-      <p className="info">Pick one topic to master before class starts. Four layers: intuition → formal → engineering application → common mistakes.</p>
+      <p className="info">Pick one topic to master before class starts. Four layers: intuition → formal → real-world application → common mistakes.</p>
       <div className="field">
         <label className="lbl">Topic to deep-dive</label>
-        <input className="inp" placeholder="e.g. Laplace transforms, Bode plots, stress-strain diagrams..."
+        <input className="inp" placeholder="e.g. supply and demand, the French Revolution, cell mitosis, Keynesian economics..."
           value={forms.topic} onChange={e => setForms({...forms, topic: e.target.value})} />
       </div>
       <div className="brow">
@@ -350,7 +350,7 @@ function Ph3({ forms, setForms, prompt, setPrompt, course }) {
     <div className="panel-body">
       <div className="field">
         <label className="lbl">Week of semester</label>
-        <input className="inp" placeholder="e.g. 4, or 'week 4 — just started eigenvalues'"
+        <input className="inp" placeholder="e.g. 4, or 'week 4 — just started thermodynamics'"
           value={forms.week} onChange={e => setForms({...forms, week: e.target.value})} />
       </div>
       <div className="tabs">
@@ -375,7 +375,7 @@ function Ph4({ forms, setForms, prompt, setPrompt, course }) {
       <p className="info">Describe a problem type you've never seen. StudyCore builds a reusable strategy, flags decision points, and gives three practice variations.</p>
       <div className="field">
         <label className="lbl">Problem type or example problem</label>
-        <textarea className="ta" placeholder="e.g. 'finding Thevenin equivalent with dependent sources' or paste a stuck problem..."
+        <textarea className="ta" placeholder="e.g. 'comparing two historical events' or 'writing a strong thesis statement' or paste a stuck problem..."
           value={forms.pt} onChange={e => setForms({...forms, pt: e.target.value})} style={{minHeight:88}} />
       </div>
       <div className="brow">
@@ -394,7 +394,7 @@ function Ph5({ forms, setForms, prompt, setPrompt, course }) {
       <p className="info">Full exam mode: priority map, day-by-day schedule, practice exam, stress test, and cheat sheet.</p>
       <div className="field">
         <label className="lbl">Topics on the exam</label>
-        <textarea className="ta" placeholder="e.g. Chapters 1–6: Laplace transforms, convolution, Bode plots..."
+        <textarea className="ta" placeholder="e.g. Chapters 1–6: supply/demand, elasticity, market structures, GDP..."
           value={forms.topics} onChange={e => setForms({...forms, topics: e.target.value})} />
       </div>
       <div className="row2">
@@ -427,7 +427,7 @@ function Ph5({ forms, setForms, prompt, setPrompt, course }) {
 const PH_COMPS = [null, Ph1, Ph2, Ph3, Ph4, Ph5];
 
 function App() {
-  const [courses, setCourses] = useState([mkCourse("Signals & Systems", COLORS[0])]);
+  const [courses, setCourses] = useState([mkCourse("Intro to Psychology", COLORS[0])]);
   const [activeCourse, setActiveCourse] = useState(() => courses[0].id);
   const [activePhase, setActivePhase] = useState(null);
   const [newName, setNewName] = useState("");
@@ -474,7 +474,7 @@ function App() {
           <div className="logo-mark" style={{background: course?.color ?? "var(--acc)"}}>🎓</div>
           <span className="logo-text">Study<em>Core</em></span>
         </div>
-        <span className="badge">Claude.ai · No API key needed</span>
+        <span className="badge">Claude.ai · Any college course</span>
       </header>
 
       <div className="body">
