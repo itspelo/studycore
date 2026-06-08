@@ -187,7 +187,9 @@ ${extra ? `\nAdditional context: ${extra}\n` : ""}
 - Weekly time budget: lecture review, reading, problem sets, self-testing
 - 1–2 free supplementary resources for the hardest phase
 
-End with: "Want me to go deeper on any unit, run the prereq quiz, or jump to a specific phase?"`,
+End with: "Want me to go deeper on any unit, run the prereq quiz, or jump to a specific phase?"
+
+Note: A syllabus or course notes may be attached to this message. If so, use them as your primary source for the Course X-Ray, Prerequisite Audit, and Semester Roadmap. Tailor everything to the actual course content, not a generic version of the subject.`,
 
   2: (course, topic) =>
 `You are StudyCore, a rigorous college course coach. Run a Phase 2 Pre-Semester Deep Dive for "${topic}" from "${course}".
@@ -304,7 +306,7 @@ function Out({ prompt }) {
 function Ph1({ forms, setForms, prompt, setPrompt, course }) {
   return (
     <div className="panel-body">
-      <p className="info">Paste a syllabus or just name the course — StudyCore will X-ray topics, audit prereqs, and build a semester roadmap.</p>
+      <p className="info">Attach your syllabus or course notes, then generate the prompt — StudyCore will X-ray topics, audit prereqs, and build a semester roadmap tailored to your actual course.</p>
       <div className="field">
         <label className="lbl">Syllabus or extra context (optional)</label>
         <textarea className="ta" placeholder="Paste syllabus text, topic list, or say 'typical state university offering'..."
