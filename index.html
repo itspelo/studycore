@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyCore — Engineering Course Coach</title>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Inter:wght@300;400;500;600&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f9f6f1; --s1:#f2ede4; --s2:#e9e2d6;
+  --bd:rgba(35,25,15,.10); --bd2:rgba(35,25,15,.18);
+  --ink:#1a1208; --ink2:#5c4c38; --ink3:#9e8c78;
+  --acc:#cc5500; --acc-lt:rgba(204,85,0,.08); --acc-md:rgba(204,85,0,.16);
+  --teal:#1a6b5a;
+  --shadow:0 1px 3px rgba(35,25,15,.08),0 4px 16px rgba(35,25,15,.05);
+  --r:10px; --fu:'Inter',system-ui,sans-serif; --ft:'Source Serif 4',Georgia,serif;
+}
+html,body,#root{height:100%;margin:0;padding:0;}
+.sc{font-family:var(--fu);background:var(--bg);min-height:100vh;color:var(--ink);display:flex;flex-direction:column;font-size:14px;line-height:1.5;}
+
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 20px;background:var(--bg);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:30;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.logo-text{font-family:var(--ft);font-size:17px;font-weight:400;color:var(--ink);}
+.logo-text em{font-style:italic;color:var(--acc);}
+.badge{font-size:11px;font-weight:500;color:var(--ink3);background:var(--s1);border:1px solid var(--bd2);padding:3px 10px;border-radius:20px;}
+
+/* BODY */
+.body{display:flex;flex:1;height:calc(100vh - 51px);overflow:hidden;}
+
+/* SIDEBAR */
+.nav{width:216px;flex-shrink:0;border-right:1px solid var(--bd);background:var(--s1);overflow-y:auto;display:flex;flex-direction:column;}
+.nav::-webkit-scrollbar{width:3px;}
+.nav::-webkit-scrollbar-thumb{background:var(--bd2);}
+.nav-section{padding:14px 14px 6px;}
+.nav-lbl{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.nav-lbl button{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:14px;line-height:1;padding:0 2px;transition:color .15s;}
+.nav-lbl button:hover{color:var(--acc);}
+
+/* COURSE ITEMS */
+.course-item{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;background:transparent;border:none;border-radius:7px;cursor:pointer;text-align:left;transition:background .12s;margin-bottom:2px;}
+.course-item:hover{background:var(--s2);}
+.course-item.on{background:var(--acc-lt);}
+.course-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.course-name{font-size:12px;font-weight:500;color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.course-item.on .course-name{color:var(--acc);}
+.course-del{opacity:0;background:none;border:none;cursor:pointer;color:var(--ink3);font-size:13px;padding:0 2px;transition:opacity .15s,color .15s;line-height:1;}
+.course-item:hover .course-del{opacity:1;}
+.course-del:hover{color:#c0392b;}
+
+/* ADD COURSE */
+.add-form{display:flex;gap:6px;margin-top:4px;}
+.add-inp{flex:1;background:white;border:1px solid var(--bd2);border-radius:7px;padding:6px 9px;font-family:var(--fu);font-size:12px;color:var(--ink);outline:none;transition:border-color .15s;}
+.add-inp:focus{border-color:var(--acc);}
+.add-inp::placeholder{color:var(--ink3);}
+.add-btn{background:var(--acc);color:white;border:none;border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer;transition:opacity .15s;}
+.add-btn:hover{opacity:.85;}
+.add-btn:disabled{opacity:.4;cursor:not-allowed;}
+.nav-div{height:1px;background:var(--bd);margin:10px 14px;}
+
+/* PHASE BUTTONS */
+.ph-btn{display:flex;align-items:flex-start;gap:9px;width:100%;padding:8px 12px 8px 14px;background:transparent;border:none;border-left:3px solid transparent;cursor:pointer;text-align:left;transition:background .12s,border-color .12s;}
+.ph-btn:hover{background:var(--s2);}
+.ph-btn.on{border-left-color:var(--acc);background:var(--acc-lt);}
+.ph-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.ph-name{font-size:12px;font-weight:500;color:var(--ink);display:block;line-height:1.3;}
+.ph-btn.on .ph-name{color:var(--acc);}
+.ph-desc{font-size:10px;color:var(--ink3);line-height:1.4;margin-top:1px;}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:28px 32px 48px;}
+.main::-webkit-scrollbar{width:4px;}
+.main::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px;}
+
+/* EMPTY */
+.empty{max-width:480px;margin:40px auto 0;text-align:center;}
+.empty-icon{font-size:40px;margin-bottom:16px;}
+.empty-h{font-family:var(--ft);font-size:26px;font-weight:300;color:var(--ink);letter-spacing:-.5px;margin-bottom:10px;}
+.empty-h em{font-style:italic;color:var(--acc);}
+.empty-p{font-family:var(--ft);font-size:14px;color:var(--ink2);line-height:1.75;}
+
+/* COURSE HEADER */
+.course-hdr{display:flex;align-items:center;gap:10px;margin-bottom:22px;}
+.course-dot-lg{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.course-title{font-family:var(--ft);font-size:22px;font-weight:300;color:var(--ink);letter-spacing:-.3px;}
+.course-title em{font-style:italic;}
+
+/* PHASE CARDS */
+.ph-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px;}
+.ph-card{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;box-shadow:var(--shadow);}
+.ph-card:hover{border-color:var(--acc);box-shadow:0 4px 16px var(--acc-md);transform:translateY(-1px);}
+.ph-card-icon{font-size:18px;margin-bottom:7px;}
+.ph-card-title{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.ph-card-desc{font-size:11px;color:var(--ink3);line-height:1.45;}
+
+/* PANEL */
+.panel{background:white;border:1px solid var(--bd);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;max-width:660px;}
+.panel-hdr{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--bd);background:var(--s1);}
+.panel-icon{font-size:19px;}
+.panel-title{font-family:var(--ft);font-size:17px;font-weight:400;color:var(--ink);}
+.panel-desc{font-size:11px;color:var(--ink3);margin-top:1px;}
+.panel-body{padding:20px;}
+
+/* FORMS */
+.field{margin-bottom:14px;}
+.lbl{display:block;font-size:11px;font-weight:500;color:var(--ink2);margin-bottom:5px;}
+.inp,.ta,.sel{width:100%;background:var(--bg);border:1px solid var(--bd2);border-radius:8px;padding:8px 12px;font-family:var(--fu);font-size:13px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s;}
+.inp:focus,.ta:focus,.sel:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-md);}
+.inp::placeholder,.ta::placeholder{color:var(--ink3);}
+.ta{resize:vertical;min-height:72px;line-height:1.5;}
+.sel{cursor:pointer;}
+.row2{display:flex;gap:12px;}
+.row2>.field{flex:1;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--bd);margin-bottom:14px;}
+.tab{padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;background:transparent;border:none;color:var(--ink3);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--fu);transition:color .12s;}
+.tab:hover{color:var(--ink2);}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc);}
+
+/* BUTTONS */
+.brow{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.btn{padding:8px 16px;border-radius:8px;font-family:var(--fu);font-size:12px;font-weight:500;cursor:pointer;transition:all .14s;border:1px solid transparent;}
+.btn:disabled{opacity:.42;cursor:not-allowed;}
+.btn-p{background:var(--acc);color:white;border-color:var(--acc);}
+.btn-p:not(:disabled):hover{background:#b34a00;border-color:#b34a00;box-shadow:0 2px 8px var(--acc-md);}
+
+/* INFO */
+.info{background:var(--s1);border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:10px 14px;font-family:var(--ft);font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:16px;font-style:italic;}
+
+/* OUTPUT */
+.out{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);margin-top:18px;overflow:hidden;}
+.out-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--bd);}
+.out-lbl{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);}
+.cp-btn{background:white;border:1px solid var(--bd2);border-radius:6px;padding:3px 12px;font-family:var(--fu);font-size:11px;font-weight:500;cursor:pointer;color:var(--ink2);transition:all .14s;}
+.cp-btn:hover{border-color:var(--acc);color:var(--acc);}
+.cp-btn.ok{color:var(--teal);border-color:var(--teal);}
+.out-text{padding:14px 16px;font-family:var(--ft);font-size:13px;line-height:1.75;color:var(--ink2);white-space:pre-wrap;word-break:break-word;max-height:300px;overflow-y:auto;}
+.out-text::-webkit-scrollbar{width:3px;}
+.out-text::-webkit-scrollbar-thumb{background:var(--bd2);}
+.out-ftr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-top:1px solid var(--bd);background:white;}
+.out-hint{font-size:11px;color:var(--ink3);font-style:italic;font-family:var(--ft);}
+.send-btn{padding:5px 14px;border-radius:8px;font-family:var(--fu);font-size:12px;font-weight:500;cursor:pointer;background:var(--acc);color:white;border:1px solid var(--acc);transition:all .14s;}
+.send-btn:hover{background:#b34a00;border-color:#b34a00;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useRef } = React;
+
+const PHASES = [
+  { id: 1, icon: "🗺️", label: "Course Intake",     desc: "X-ray topics, audit prereqs, roadmap" },
+  { id: 2, icon: "📖", label: "Pre-Semester",       desc: "Deep-dive topics before class" },
+  { id: 3, icon: "📆", label: "Weekly Workflow",    desc: "Preview, debrief, problem sets" },
+  { id: 4, icon: "🧩", label: "Problem Frameworks", desc: "Strategies for unfamiliar problems" },
+  { id: 5, icon: "🏆", label: "Exam Prep",          desc: "Practice exams, stress tests" },
+];
+
+const COLORS = ["#cc5500","#1a6b5a","#1a3d6b","#7a3b8c","#b34a00","#2a6b3a"];
+
+const buildPrompt = {
+  1: (course, extra) =>
+`You are StudyCore, a rigorous engineering course coach. Run a full Phase 1 Course Intake for: "${course}".
+${extra ? `\nAdditional context: ${extra}\n` : ""}
+**1. Course X-Ray**
+- Major topic units in order, one sentence each
+- 3–5 foundational concepts everything else depends on
+- 2–3 topics students most commonly struggle with and why
+- Plain-English summary: what this course is really about and why engineers need it
+
+**2. Prerequisite Audit**
+- Specific prerequisite knowledge (precise: not "calculus" but "derivatives/integrals of trig functions")
+- 2-question diagnostic per prereq for self-assessment
+- Free resource for each likely gap (Khan Academy, MIT OCW, YouTube)
+
+**3. Semester Roadmap**
+- Group semester into 3–4 phases by content evolution
+- Flag the hardest phase and why
+- Weekly time budget: lecture review, reading, problem sets, self-testing
+- 1–2 free supplementary resources for the hardest phase
+
+End with: "Want me to go deeper on any unit, run the prereq quiz, or jump to a specific phase?"`,
+
+  2: (course, topic) =>
+`You are StudyCore. Run a Phase 2 Pre-Semester Deep Dive for "${topic}" from "${course}".
+
+**1. Intuition** — Plain-English, vivid analogy, no jargon. End: "Does that mental model make sense?"
+**2. Formal** — Precise definition, notation, formulas. Explain each symbol. Say when you'd use this.
+**3. Engineering Application** — Specific concrete example of where/why engineers use this.
+**4. Common Mistakes** — Sign errors, unit traps, conceptual confusions.
+
+Then 3 practice problems: Easy → Medium → Hard. State each; tell student to try before reading on.`,
+
+  3: (course, week, mode) => {
+    if (mode === "preview") return `You are StudyCore. Run a Week ${week} Preview for "${course}".
+- 2-paragraph overview: what's covered and how it connects to prior material
+- Vocabulary/formula quick-reference card (key terms, one-line definitions)
+- 3 focus questions to carry into lecture
+- One thing that trips students up this week and how to catch it`;
+
+    if (mode === "quiz") return `You are StudyCore. Run a Weekly Self-Assessment for Week ${week} of "${course}".
+
+5-question quiz: 2 conceptual, 2 applied/calculation, 1 tricky edge case.
+For each: state the question, then give the answer + explanation after a blank line. Rate: Easy/Medium/Hard.
+End: "Score yourself. For any you missed, which concept needs revisiting?"`;
+
+    return `You are StudyCore. Help a student work through a problem set problem from "${course}" Week ${week}.
+
+Open with: "Show me the problem and walk me through what you've tried — even if unsure. I won't give the answer directly, but I'll help you find your own next step."
+
+Tutor protocol:
+1. Ask for their work and where they got stuck
+2. Diagnose understanding → ask ONE guiding question toward the next step
+3. Name any misconception gap without resolving it — ask them to think first
+4. After they work through it, review and explain remaining errors
+
+If they shortcut: "I know that's frustrating, but if I give the answer you'll recognize it but not reproduce it on an exam. Let's find exactly where you got stuck."`;
+  },
+
+  4: (course, pt) =>
+`You are StudyCore. Build a Problem-Solving Framework for "${pt}" in "${course}".
+
+**1. Problem Class** — Name this precisely.
+**2. Generalizable Strategy** — Numbered steps abstract enough for any version. Explain WHY each precedes the next.
+**3. Decision Points** — 2–3 moments where students go wrong. What does the wrong path look like?
+**4. Three Variations** — Easy → Medium → Hard with solutions, highlighting which step each tests.
+**5. Real Engineering Context** — Specific industry, system, and calculation where this appears.
+
+End: "Want me to derive why this strategy works from first principles?"`,
+
+  5: (course, topics, days, fmt) =>
+`You are StudyCore. Full Phase 5 Exam Prep for "${course}".
+Topics: ${topics} | ${days} days away | Format: ${fmt}
+
+**1. Scope & Priority Map** — Rank topics by point weight × difficulty. Per topic: what the student needs to DO, not just know.
+**2. Day-by-Day Schedule** — Concrete ${days}-day plan: topic, practice, time estimate per day. Front-load hard topics.
+**3. Practice Exam** — 30/50/20 easy/moderate/hard split, mixed conceptual + calculation. Answers with key insight.
+**4. Stress Test** — For 2 hardest topics: explain without formula, unusual version, looks-like-X-but-needs-Y problem.
+**5. Cheat Sheet** — Top formulas, when to use each, sign errors, unit traps, edge cases.`,
+};
+
+const defaultForms = () => ({
+  1: { extra: "" },
+  2: { topic: "" },
+  3: { week: "", tab: "preview" },
+  4: { pt: "" },
+  5: { topics: "", days: "7", fmt: "mixed (conceptual + calculation)" },
+});
+
+const mkCourse = (name, color) => ({
+  id: Date.now() + Math.random(),
+  name,
+  color,
+  forms: defaultForms(),
+  prompts: { 1:"", 2:"", 3:"", 4:"", 5:"" },
+});
+
+function CopyBtn({ text }) {
+  const [ok, setOk] = useState(false);
+  return (
+    <button className={`cp-btn${ok ? " ok" : ""}`} onClick={() => {
+      navigator.clipboard.writeText(text);
+      setOk(true);
+      setTimeout(() => setOk(false), 2000);
+    }}>
+      {ok ? "✓ Copied!" : "Copy prompt"}
+    </button>
+  );
+}
+
+function Out({ prompt }) {
+  if (!prompt) return null;
+  const handleSend = () => {
+    if (window.sendPrompt) {
+      window.sendPrompt(prompt);
+    } else {
+      navigator.clipboard.writeText(prompt);
+      alert("Prompt copied! Paste it into a new Claude chat.");
+    }
+  };
+  return (
+    <div className="out">
+      <div className="out-hdr">
+        <span className="out-lbl">Generated prompt — paste into Claude</span>
+        <CopyBtn text={prompt} />
+      </div>
+      <div className="out-text">{prompt}</div>
+      <div className="out-ftr">
+        <span className="out-hint">Copy → new Claude chat → paste → Enter</span>
+        <button className="send-btn" onClick={handleSend}>Send to Claude →</button>
+      </div>
+    </div>
+  );
+}
+
+function Ph1({ forms, setForms, prompt, setPrompt, course }) {
+  return (
+    <div className="panel-body">
+      <p className="info">Paste a syllabus or just name the course — StudyCore will X-ray topics, audit prereqs, and build a semester roadmap.</p>
+      <div className="field">
+        <label className="lbl">Syllabus or extra context (optional)</label>
+        <textarea className="ta" placeholder="Paste syllabus text, topic list, or say 'typical state university offering'..."
+          value={forms.extra} onChange={e => setForms({...forms, extra: e.target.value})} />
+      </div>
+      <div className="brow">
+        <button className="btn btn-p" onClick={() => setPrompt(buildPrompt[1](course, forms.extra))} disabled={!course}>
+          Generate Course Intake Prompt
+        </button>
+      </div>
+      <Out prompt={prompt} />
+    </div>
+  );
+}
+
+function Ph2({ forms, setForms, prompt, setPrompt, course }) {
+  return (
+    <div className="panel-body">
+      <p className="info">Pick one topic to master before class starts. Four layers: intuition → formal → engineering application → common mistakes.</p>
+      <div className="field">
+        <label className="lbl">Topic to deep-dive</label>
+        <input className="inp" placeholder="e.g. Laplace transforms, Bode plots, stress-strain diagrams..."
+          value={forms.topic} onChange={e => setForms({...forms, topic: e.target.value})} />
+      </div>
+      <div className="brow">
+        <button className="btn btn-p" onClick={() => setPrompt(buildPrompt[2](course, forms.topic))} disabled={!course || !forms.topic}>
+          Generate Deep Dive Prompt
+        </button>
+      </div>
+      <Out prompt={prompt} />
+    </div>
+  );
+}
+
+function Ph3({ forms, setForms, prompt, setPrompt, course }) {
+  const tabs = [["preview","Week Preview"],["quiz","Self-Assessment"],["ps","Problem Set Help"]];
+  const hints = {
+    preview: "Overview, vocab card, 3 focus questions to carry into lecture.",
+    quiz: "5-question quiz: 2 conceptual, 2 applied, 1 tricky — graded with explanations.",
+    ps: "Paste your problem in Claude. StudyCore guides you to your own next step — no freebies."
+  };
+  return (
+    <div className="panel-body">
+      <div className="field">
+        <label className="lbl">Week of semester</label>
+        <input className="inp" placeholder="e.g. 4, or 'week 4 — just started eigenvalues'"
+          value={forms.week} onChange={e => setForms({...forms, week: e.target.value})} />
+      </div>
+      <div className="tabs">
+        {tabs.map(([k,v]) => (
+          <button key={k} className={`tab${forms.tab === k ? " on" : ""}`} onClick={() => setForms({...forms, tab: k})}>{v}</button>
+        ))}
+      </div>
+      <p style={{fontSize:12,color:"var(--ink3)",marginBottom:14,fontStyle:"italic",fontFamily:"var(--ft)"}}>{hints[forms.tab]}</p>
+      <div className="brow">
+        <button className="btn btn-p" onClick={() => setPrompt(buildPrompt[3](course, forms.week || "current", forms.tab))} disabled={!course}>
+          Generate Prompt
+        </button>
+      </div>
+      <Out prompt={prompt} />
+    </div>
+  );
+}
+
+function Ph4({ forms, setForms, prompt, setPrompt, course }) {
+  return (
+    <div className="panel-body">
+      <p className="info">Describe a problem type you've never seen. StudyCore builds a reusable strategy, flags decision points, and gives three practice variations.</p>
+      <div className="field">
+        <label className="lbl">Problem type or example problem</label>
+        <textarea className="ta" placeholder="e.g. 'finding Thevenin equivalent with dependent sources' or paste a stuck problem..."
+          value={forms.pt} onChange={e => setForms({...forms, pt: e.target.value})} style={{minHeight:88}} />
+      </div>
+      <div className="brow">
+        <button className="btn btn-p" onClick={() => setPrompt(buildPrompt[4](course, forms.pt))} disabled={!course || !forms.pt}>
+          Generate Framework Prompt
+        </button>
+      </div>
+      <Out prompt={prompt} />
+    </div>
+  );
+}
+
+function Ph5({ forms, setForms, prompt, setPrompt, course }) {
+  return (
+    <div className="panel-body">
+      <p className="info">Full exam mode: priority map, day-by-day schedule, practice exam, stress test, and cheat sheet.</p>
+      <div className="field">
+        <label className="lbl">Topics on the exam</label>
+        <textarea className="ta" placeholder="e.g. Chapters 1–6: Laplace transforms, convolution, Bode plots..."
+          value={forms.topics} onChange={e => setForms({...forms, topics: e.target.value})} />
+      </div>
+      <div className="row2">
+        <div className="field">
+          <label className="lbl">Days until exam</label>
+          <input className="inp" type="number" min="1" max="30" value={forms.days}
+            onChange={e => setForms({...forms, days: e.target.value})} />
+        </div>
+        <div className="field">
+          <label className="lbl">Exam format</label>
+          <select className="sel" value={forms.fmt} onChange={e => setForms({...forms, fmt: e.target.value})}>
+            <option>mixed (conceptual + calculation)</option>
+            <option>multiple choice</option>
+            <option>open-ended problems only</option>
+            <option>short answer + long problems</option>
+            <option>cheat sheet permitted</option>
+          </select>
+        </div>
+      </div>
+      <div className="brow">
+        <button className="btn btn-p" onClick={() => setPrompt(buildPrompt[5](course, forms.topics, forms.days, forms.fmt))} disabled={!course || !forms.topics}>
+          Generate Exam Prep Prompt
+        </button>
+      </div>
+      <Out prompt={prompt} />
+    </div>
+  );
+}
+
+const PH_COMPS = [null, Ph1, Ph2, Ph3, Ph4, Ph5];
+
+function App() {
+  const [courses, setCourses] = useState([mkCourse("Signals & Systems", COLORS[0])]);
+  const [activeCourse, setActiveCourse] = useState(() => courses[0].id);
+  const [activePhase, setActivePhase] = useState(null);
+  const [newName, setNewName] = useState("");
+  const addInpRef = useRef();
+
+  const course = courses.find(c => c.id === activeCourse);
+
+  const setForms = (phaseId, val) => {
+    setCourses(cs => cs.map(c => c.id === activeCourse ? {...c, forms: {...c.forms, [phaseId]: val}} : c));
+  };
+
+  const setPrompt = (phaseId, val) => {
+    setCourses(cs => cs.map(c => c.id === activeCourse ? {...c, prompts: {...c.prompts, [phaseId]: val}} : c));
+  };
+
+  const addCourse = () => {
+    if (!newName.trim()) return;
+    const color = COLORS[courses.length % COLORS.length];
+    const nc = mkCourse(newName.trim(), color);
+    setCourses(cs => [...cs, nc]);
+    setActiveCourse(nc.id);
+    setActivePhase(null);
+    setNewName("");
+  };
+
+  const delCourse = (id) => {
+    const remaining = courses.filter(c => c.id !== id);
+    setCourses(remaining);
+    if (activeCourse === id) {
+      setActiveCourse(remaining[0]?.id ?? null);
+      setActivePhase(null);
+    }
+  };
+
+  const switchCourse = (id) => { setActiveCourse(id); setActivePhase(null); };
+
+  const PhComp = activePhase ? PH_COMPS[activePhase] : null;
+  const phInfo = activePhase ? PHASES[activePhase - 1] : null;
+
+  return (
+    <div className="sc">
+      <header className="hdr">
+        <div className="logo">
+          <div className="logo-mark" style={{background: course?.color ?? "var(--acc)"}}>🎓</div>
+          <span className="logo-text">Study<em>Core</em></span>
+        </div>
+        <span className="badge">Claude.ai · No API key needed</span>
+      </header>
+
+      <div className="body">
+        <nav className="nav">
+          <div className="nav-section">
+            <div className="nav-lbl"><span>My Courses</span></div>
+            {courses.map(c => (
+              <button key={c.id} className={`course-item${activeCourse === c.id ? " on" : ""}`} onClick={() => switchCourse(c.id)}>
+                <span className="course-dot" style={{background: c.color}} />
+                <span className="course-name">{c.name}</span>
+                {courses.length > 1 && (
+                  <span className="course-del" onClick={e => { e.stopPropagation(); delCourse(c.id); }} title="Remove">×</span>
+                )}
+              </button>
+            ))}
+            <div className="add-form">
+              <input ref={addInpRef} className="add-inp" placeholder="Add course…"
+                value={newName} onChange={e => setNewName(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && addCourse()} />
+              <button className="add-btn" onClick={addCourse} disabled={!newName.trim()}>+</button>
+            </div>
+          </div>
+
+          <div className="nav-div" />
+
+          <div style={{padding:"0 0 4px"}}>
+            <div className="nav-lbl" style={{padding:"0 14px",marginBottom:6}}><span>Phases</span></div>
+            {PHASES.map(p => (
+              <button key={p.id}
+                className={`ph-btn${activePhase === p.id && activeCourse ? " on" : ""}`}
+                onClick={() => { if (activeCourse) setActivePhase(p.id); }}
+                style={{opacity: activeCourse ? 1 : 0.4, cursor: activeCourse ? "pointer" : "default"}}>
+                <span className="ph-icon">{p.icon}</span>
+                <span>
+                  <span className="ph-name">{p.label}</span>
+                  <span className="ph-desc">{p.desc}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        <main className="main">
+          {!course ? (
+            <div className="empty">
+              <div className="empty-icon">📚</div>
+              <h1 className="empty-h">Add a <em>course</em> to begin</h1>
+              <p className="empty-p">Type a course name in the sidebar and press Enter or + to get started.</p>
+            </div>
+          ) : !activePhase ? (
+            <>
+              <div className="course-hdr">
+                <span className="course-dot-lg" style={{background: course.color}} />
+                <span className="course-title"><em>{course.name}</em></span>
+              </div>
+              <div className="ph-cards">
+                {PHASES.map(p => (
+                  <div key={p.id} className="ph-card" onClick={() => setActivePhase(p.id)}>
+                    <div className="ph-card-icon">{p.icon}</div>
+                    <div className="ph-card-title">{p.label}</div>
+                    <div className="ph-card-desc">{p.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="course-hdr">
+                <span className="course-dot-lg" style={{background: course.color}} />
+                <span className="course-title"><em>{course.name}</em></span>
+              </div>
+              <div className="panel">
+                <div className="panel-hdr">
+                  <span className="panel-icon">{phInfo.icon}</span>
+                  <div>
+                    <div className="panel-title">{phInfo.label}</div>
+                    <div className="panel-desc">{phInfo.desc}</div>
+                  </div>
+                </div>
+                {PhComp && (
+                  <PhComp
+                    course={course.name}
+                    forms={course.forms[activePhase]}
+                    setForms={v => setForms(activePhase, v)}
+                    prompt={course.prompts[activePhase]}
+                    setPrompt={v => setPrompt(activePhase, v)}
+                  />
+                )}
+              </div>
+            </>
+          )}
+        </main>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
