@@ -3,55 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyCore Live — Engineering Course Coach</title>
+<title>StudyCore Live</title>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Inter:wght@300;400;500;600&display=swap');
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#f9f6f1; --s1:#f2ede4; --s2:#e9e2d6;
-  --bd:rgba(35,25,15,.10); --bd2:rgba(35,25,15,.18);
-  --ink:#1a1208; --ink2:#5c4c38; --ink3:#9e8c78;
-  --acc:#cc5500; --acc-lt:rgba(204,85,0,.08); --acc-md:rgba(204,85,0,.16);
-  --teal:#1a6b5a; --teal-lt:rgba(26,107,90,.08);
+  --bg:#f9f6f1;--s1:#f2ede4;--s2:#e9e2d6;
+  --bd:rgba(35,25,15,.10);--bd2:rgba(35,25,15,.18);
+  --ink:#1a1208;--ink2:#5c4c38;--ink3:#9e8c78;
+  --acc:#cc5500;--acc-lt:rgba(204,85,0,.08);--acc-md:rgba(204,85,0,.16);
+  --teal:#1a6b5a;--teal-lt:rgba(26,107,90,.08);
   --shadow:0 1px 3px rgba(35,25,15,.08),0 4px 16px rgba(35,25,15,.05);
-  --r:10px; --fu:'Inter',system-ui,sans-serif; --ft:'Source Serif 4',Georgia,serif;
+  --r:10px;--fu:'Inter',system-ui,sans-serif;--ft:'Source Serif 4',Georgia,serif;
 }
 html,body,#root{height:100%;margin:0;padding:0;}
 .sc{font-family:var(--fu);background:var(--bg);min-height:100vh;color:var(--ink);display:flex;flex-direction:column;font-size:14px;line-height:1.5;}
-
-/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 20px;background:var(--bg);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:30;gap:12px;}
-.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:8px;flex-shrink:0;}
 .logo-mark{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
 .logo-text{font-family:var(--ft);font-size:17px;font-weight:400;color:var(--ink);}
 .logo-text em{font-style:italic;color:var(--acc);}
-.logo-sub{font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--teal);background:var(--teal-lt);border:1px solid rgba(26,107,90,.2);padding:2px 8px;border-radius:20px;margin-left:4px;}
-.hdr-right{display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-end;}
-
-/* API KEY BAR */
-.key-bar{display:flex;align-items:center;gap:6px;}
-.key-inp{background:white;border:1px solid var(--bd2);border-radius:7px;padding:5px 10px;font-family:var(--fu);font-size:11px;color:var(--ink);outline:none;transition:border-color .15s;width:220px;}
+.logo-sub{font-size:10px;font-weight:600;color:var(--teal);background:var(--teal-lt);border:1px solid rgba(26,107,90,.2);padding:2px 8px;border-radius:20px;}
+.hdr-right{display:flex;align-items:center;gap:8px;}
+.key-inp{background:white;border:1px solid var(--bd2);border-radius:7px;padding:5px 10px;font-family:var(--fu);font-size:11px;color:var(--ink);outline:none;width:240px;}
 .key-inp:focus{border-color:var(--acc);}
 .key-inp::placeholder{color:var(--ink3);}
-.key-status{font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;}
-.key-status.ok{color:var(--teal);background:var(--teal-lt);border:1px solid rgba(26,107,90,.2);}
-.key-status.no{color:var(--ink3);background:var(--s1);border:1px solid var(--bd2);}
-.key-btn{background:var(--acc);color:white;border:none;border-radius:7px;padding:5px 12px;font-family:var(--fu);font-size:11px;font-weight:500;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
-.key-btn:hover{opacity:.85;}
+.key-status{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;color:var(--teal);background:var(--teal-lt);border:1px solid rgba(26,107,90,.2);}
+.key-btn{border:none;border-radius:7px;padding:5px 12px;font-family:var(--fu);font-size:11px;font-weight:500;cursor:pointer;}
+.key-btn.save{background:var(--acc);color:white;}
+.key-btn.save:hover{opacity:.85;}
 .key-btn.clear{background:transparent;color:var(--ink3);border:1px solid var(--bd2);}
-.key-btn.clear:hover{border-color:#c0392b;color:#c0392b;opacity:1;}
-
-/* BODY */
+.key-btn.clear:hover{border-color:#c0392b;color:#c0392b;}
 .body{display:flex;flex:1;height:calc(100vh - 51px);overflow:hidden;}
-
-/* SIDEBAR */
 .nav{width:216px;flex-shrink:0;border-right:1px solid var(--bd);background:var(--s1);overflow-y:auto;display:flex;flex-direction:column;}
-.nav::-webkit-scrollbar{width:3px;}
-.nav::-webkit-scrollbar-thumb{background:var(--bd2);}
 .nav-section{padding:14px 14px 6px;}
 .nav-lbl{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
 .course-item{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;background:transparent;border:none;border-radius:7px;cursor:pointer;text-align:left;transition:background .12s;margin-bottom:2px;}
@@ -60,15 +47,14 @@ html,body,#root{height:100%;margin:0;padding:0;}
 .course-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .course-name{font-size:12px;font-weight:500;color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .course-item.on .course-name{color:var(--acc);}
-.course-del{opacity:0;background:none;border:none;cursor:pointer;color:var(--ink3);font-size:13px;padding:0 2px;transition:opacity .15s,color .15s;line-height:1;}
+.course-del{opacity:0;background:none;border:none;cursor:pointer;color:var(--ink3);font-size:13px;padding:0 2px;line-height:1;}
 .course-item:hover .course-del{opacity:1;}
 .course-del:hover{color:#c0392b;}
 .add-form{display:flex;gap:6px;margin-top:4px;}
-.add-inp{flex:1;background:white;border:1px solid var(--bd2);border-radius:7px;padding:6px 9px;font-family:var(--fu);font-size:12px;color:var(--ink);outline:none;transition:border-color .15s;}
+.add-inp{flex:1;background:white;border:1px solid var(--bd2);border-radius:7px;padding:6px 9px;font-family:var(--fu);font-size:12px;color:var(--ink);outline:none;}
 .add-inp:focus{border-color:var(--acc);}
 .add-inp::placeholder{color:var(--ink3);}
-.add-btn{background:var(--acc);color:white;border:none;border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer;transition:opacity .15s;}
-.add-btn:hover{opacity:.85;}
+.add-btn{background:var(--acc);color:white;border:none;border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer;}
 .add-btn:disabled{opacity:.4;cursor:not-allowed;}
 .nav-div{height:1px;background:var(--bd);margin:10px 14px;}
 .ph-btn{display:flex;align-items:flex-start;gap:9px;width:100%;padding:8px 12px 8px 14px;background:transparent;border:none;border-left:3px solid transparent;cursor:pointer;text-align:left;transition:background .12s,border-color .12s;}
@@ -78,28 +64,18 @@ html,body,#root{height:100%;margin:0;padding:0;}
 .ph-name{font-size:12px;font-weight:500;color:var(--ink);display:block;line-height:1.3;}
 .ph-btn.on .ph-name{color:var(--acc);}
 .ph-desc{font-size:10px;color:var(--ink3);line-height:1.4;margin-top:1px;}
-
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-
-/* NO KEY BANNER */
-.no-key-banner{background:rgba(204,85,0,.06);border-bottom:1px solid rgba(204,85,0,.15);padding:9px 24px;font-size:12px;color:var(--ink2);font-family:var(--ft);font-style:italic;text-align:center;}
-.no-key-banner strong{font-style:normal;color:var(--acc);font-weight:600;}
-
-/* EMPTY */
-.empty{max-width:480px;margin:40px auto 0;text-align:center;padding:0 20px;}
+.banner{background:rgba(204,85,0,.06);border-bottom:1px solid rgba(204,85,0,.15);padding:8px 24px;font-size:12px;color:var(--ink2);font-family:var(--ft);font-style:italic;text-align:center;}
+.banner strong{font-style:normal;color:var(--acc);}
+.empty{max-width:480px;margin:60px auto 0;text-align:center;padding:0 20px;}
 .empty-icon{font-size:40px;margin-bottom:16px;}
 .empty-h{font-family:var(--ft);font-size:26px;font-weight:300;color:var(--ink);letter-spacing:-.5px;margin-bottom:10px;}
 .empty-h em{font-style:italic;color:var(--acc);}
 .empty-p{font-family:var(--ft);font-size:14px;color:var(--ink2);line-height:1.75;}
-
-/* COURSE HEADER */
 .course-hdr{display:flex;align-items:center;gap:10px;padding:20px 28px 0;}
 .course-dot-lg{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .course-title{font-family:var(--ft);font-size:20px;font-weight:300;color:var(--ink);letter-spacing:-.3px;}
 .course-title em{font-style:italic;}
-
-/* PHASE CARDS */
 .ph-cards-wrap{padding:16px 28px 28px;overflow-y:auto;flex:1;}
 .ph-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:540px;}
 .ph-card{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;box-shadow:var(--shadow);}
@@ -107,648 +83,419 @@ html,body,#root{height:100%;margin:0;padding:0;}
 .ph-card-icon{font-size:18px;margin-bottom:7px;}
 .ph-card-title{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px;}
 .ph-card-desc{font-size:11px;color:var(--ink3);line-height:1.45;}
-
-/* CHAT LAYOUT */
 .chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.chat-top{padding:14px 24px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;}
+.chat-top{padding:13px 24px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;}
 .chat-phase-info{display:flex;align-items:center;gap:10px;}
 .chat-phase-icon{font-size:16px;}
 .chat-phase-title{font-family:var(--ft);font-size:16px;font-weight:400;color:var(--ink);}
 .chat-phase-desc{font-size:11px;color:var(--ink3);}
-.chat-actions{display:flex;gap:6px;flex-shrink:0;}
-.chat-action-btn{background:white;border:1px solid var(--bd2);border-radius:7px;padding:4px 12px;font-family:var(--fu);font-size:11px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .14s;}
-.chat-action-btn:hover{border-color:var(--acc);color:var(--acc);}
-
-/* CONFIG PANEL */
-.cfg{padding:16px 24px;background:var(--s1);border-bottom:1px solid var(--bd);flex-shrink:0;}
+.chat-actions{display:flex;gap:6px;}
+.chat-btn{background:white;border:1px solid var(--bd2);border-radius:7px;padding:4px 12px;font-family:var(--fu);font-size:11px;font-weight:500;color:var(--ink2);cursor:pointer;}
+.chat-btn:hover{border-color:var(--acc);color:var(--acc);}
+.cfg{padding:14px 24px;background:var(--s1);border-bottom:1px solid var(--bd);flex-shrink:0;}
 .cfg-grid{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
 .cfg-field{display:flex;flex-direction:column;gap:4px;}
 .cfg-lbl{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);}
-.cfg-inp,.cfg-sel{background:white;border:1px solid var(--bd2);border-radius:7px;padding:6px 10px;font-family:var(--fu);font-size:12px;color:var(--ink);outline:none;transition:border-color .15s;}
+.cfg-inp,.cfg-sel{background:white;border:1px solid var(--bd2);border-radius:7px;padding:6px 10px;font-family:var(--fu);font-size:12px;color:var(--ink);outline:none;}
 .cfg-inp:focus,.cfg-sel:focus{border-color:var(--acc);}
 .cfg-inp::placeholder{color:var(--ink3);}
-.cfg-inp.wide{width:260px;}
-.cfg-inp.med{width:160px;}
-.cfg-inp.sm{width:80px;}
+.cfg-inp.wide{width:260px;}.cfg-inp.med{width:160px;}.cfg-inp.sm{width:80px;}
 .cfg-sel{cursor:pointer;width:220px;}
 .cfg-tabs{display:flex;gap:4px;}
-.cfg-tab{padding:5px 12px;font-size:11px;font-weight:500;cursor:pointer;background:white;border:1px solid var(--bd2);border-radius:6px;color:var(--ink3);font-family:var(--fu);transition:all .12s;}
-.cfg-tab:hover{border-color:var(--acc);color:var(--acc);}
+.cfg-tab{padding:5px 12px;font-size:11px;font-weight:500;cursor:pointer;background:white;border:1px solid var(--bd2);border-radius:6px;color:var(--ink3);font-family:var(--fu);}
 .cfg-tab.on{background:var(--acc);border-color:var(--acc);color:white;}
-.start-btn{background:var(--acc);color:white;border:none;border-radius:8px;padding:7px 18px;font-family:var(--fu);font-size:12px;font-weight:600;cursor:pointer;transition:all .14s;white-space:nowrap;}
+.start-btn{background:var(--acc);color:white;border:none;border-radius:8px;padding:7px 18px;font-family:var(--fu);font-size:12px;font-weight:600;cursor:pointer;}
 .start-btn:hover{background:#b34a00;}
 .start-btn:disabled{opacity:.4;cursor:not-allowed;}
-
-/* MESSAGES */
+.cfg-hint{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;color:var(--ink3);font-family:var(--ft);font-size:13px;font-style:italic;text-align:center;}
 .messages{flex:1;overflow-y:auto;padding:16px 24px;display:flex;flex-direction:column;gap:14px;}
 .messages::-webkit-scrollbar{width:4px;}
 .messages::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px;}
-
-.msg{display:flex;gap:10px;max-width:820px;}
-.msg.user{flex-direction:row-reverse;align-self:flex-end;}
-.msg-avatar{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;}
-.msg.user .msg-avatar{background:var(--acc);color:white;}
-.msg.assistant .msg-avatar{background:var(--s2);color:var(--ink2);}
-.msg-bubble{background:white;border:1px solid var(--bd);border-radius:12px;padding:12px 16px;font-family:var(--ft);font-size:13px;line-height:1.75;color:var(--ink2);max-width:680px;box-shadow:var(--shadow);}
-.msg.user .msg-bubble{background:var(--acc);border-color:var(--acc);color:white;border-radius:12px 4px 12px 12px;}
-.msg.assistant .msg-bubble{border-radius:4px 12px 12px 12px;}
-.msg-bubble pre{background:var(--s2);border-radius:6px;padding:10px 12px;font-size:12px;overflow-x:auto;margin:8px 0;font-family:monospace;line-height:1.5;}
-.msg-bubble strong{font-weight:600;color:var(--ink);}
-.msg.user .msg-bubble strong{color:white;}
-.msg-bubble em{font-style:italic;}
-.msg-bubble p{margin-bottom:8px;}
-.msg-bubble p:last-child{margin-bottom:0;}
-.msg-bubble ul,.msg-bubble ol{padding-left:18px;margin:6px 0;}
-.msg-bubble li{margin-bottom:3px;}
-.msg-bubble h1,.msg-bubble h2,.msg-bubble h3{font-family:var(--ft);font-weight:400;margin:10px 0 4px;}
-.msg-bubble h1{font-size:16px;}
-.msg-bubble h2{font-size:14px;}
-.msg-bubble h3{font-size:13px;color:var(--acc);}
-.msg.user .msg-bubble h3{color:rgba(255,255,255,.85);}
-
-.typing-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink3);margin:0 2px;animation:blink 1.2s infinite;}
-.typing-dot:nth-child(2){animation-delay:.2s;}
-.typing-dot:nth-child(3){animation-delay:.4s;}
+.msg{display:flex;gap:10px;}
+.msg.user{flex-direction:row-reverse;align-self:flex-end;max-width:80%;}
+.msg.assistant{max-width:92%;}
+.msg-av{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;}
+.msg.user .msg-av{background:var(--acc);color:white;}
+.msg.assistant .msg-av{background:var(--s2);color:var(--ink2);}
+.bubble{border:1px solid var(--bd);border-radius:12px;padding:12px 16px;font-family:var(--ft);font-size:13px;line-height:1.75;color:var(--ink2);box-shadow:var(--shadow);}
+.msg.user .bubble{background:var(--acc);border-color:var(--acc);color:white;border-radius:12px 4px 12px 12px;}
+.msg.assistant .bubble{background:white;border-radius:4px 12px 12px 12px;}
+.bubble p{margin-bottom:8px;}.bubble p:last-child{margin-bottom:0;}
+.bubble h1,.bubble h2,.bubble h3{font-family:var(--ft);font-weight:400;margin:10px 0 4px;}
+.bubble h1{font-size:16px;}.bubble h2{font-size:14px;color:var(--ink);}.bubble h3{font-size:13px;color:var(--acc);}
+.bubble ul,.bubble ol{padding-left:20px;margin:6px 0;}.bubble li{margin-bottom:3px;}
+.bubble pre{background:var(--s2);border-radius:6px;padding:10px 12px;font-size:12px;overflow-x:auto;margin:8px 0;font-family:monospace;}
+.bubble code{background:var(--s2);padding:1px 5px;border-radius:4px;font-size:12px;font-family:monospace;}
+.bubble hr{border:none;border-top:1px solid var(--bd);margin:10px 0;}
+.bubble strong{font-weight:600;}
+.tdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink3);margin:0 2px;animation:blink 1.2s infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
 @keyframes blink{0%,80%,100%{opacity:.2;}40%{opacity:1;}}
-
-/* INPUT BAR */
 .input-bar{padding:12px 24px 16px;border-top:1px solid var(--bd);background:var(--bg);flex-shrink:0;}
 .input-row{display:flex;gap:8px;align-items:flex-end;}
-.chat-inp{flex:1;background:white;border:1px solid var(--bd2);border-radius:10px;padding:10px 14px;font-family:var(--fu);font-size:13px;color:var(--ink);outline:none;resize:none;line-height:1.5;max-height:120px;transition:border-color .15s;}
+.chat-inp{flex:1;background:white;border:1px solid var(--bd2);border-radius:10px;padding:10px 14px;font-family:var(--fu);font-size:13px;color:var(--ink);outline:none;resize:none;line-height:1.5;max-height:120px;}
 .chat-inp:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-md);}
 .chat-inp::placeholder{color:var(--ink3);}
-.send-btn{background:var(--acc);color:white;border:none;border-radius:10px;padding:10px 16px;font-size:16px;cursor:pointer;transition:all .14s;flex-shrink:0;height:42px;width:42px;display:flex;align-items:center;justify-content:center;}
+.chat-inp:disabled{opacity:.5;}
+.send-btn{background:var(--acc);color:white;border:none;border-radius:10px;width:42px;height:42px;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .send-btn:hover{background:#b34a00;}
 .send-btn:disabled{opacity:.4;cursor:not-allowed;}
-.input-hint{font-size:10px;color:var(--ink3);margin-top:5px;font-style:italic;font-family:var(--ft);}
-
-/* ERROR */
-.err-msg{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:12px;color:#b91c1c;font-family:var(--fu);}
+.hint{font-size:10px;color:var(--ink3);margin-top:5px;font-style:italic;font-family:var(--ft);}
+.err{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:12px;color:#b91c1c;}
 </style>
 </head>
 <body>
 <div id="root"></div>
-
 <script type="text/babel">
 const { useState, useRef, useEffect, useCallback } = React;
 
 const PHASES = [
-  { id: 1, icon: "🗺️", label: "Course Intake",     desc: "X-ray topics, audit prereqs, roadmap" },
-  { id: 2, icon: "📖", label: "Pre-Semester",       desc: "Deep-dive topics before class" },
-  { id: 3, icon: "📆", label: "Weekly Workflow",    desc: "Preview, debrief, problem sets" },
-  { id: 4, icon: "🧩", label: "Problem Frameworks", desc: "Strategies for unfamiliar problems" },
-  { id: 5, icon: "🏆", label: "Exam Prep",          desc: "Practice exams, stress tests" },
+  {id:1,icon:"🗺️",label:"Course Intake",desc:"X-ray topics, audit prereqs, roadmap"},
+  {id:2,icon:"📖",label:"Pre-Semester",desc:"Deep-dive topics before class"},
+  {id:3,icon:"📆",label:"Weekly Workflow",desc:"Preview, debrief, problem sets"},
+  {id:4,icon:"🧩",label:"Problem Frameworks",desc:"Strategies for unfamiliar problems"},
+  {id:5,icon:"🏆",label:"Exam Prep",desc:"Practice exams, stress tests"},
 ];
+const COLORS=["#cc5500","#1a6b5a","#1a3d6b","#7a3b8c","#b34a00","#2a6b3a"];
 
-const COLORS = ["#cc5500","#1a6b5a","#1a3d6b","#7a3b8c","#b34a00","#2a6b3a"];
-
-/* ── System prompts per phase ───────────────────────────── */
-const SYSTEM = {
-  1: (course) => `You are StudyCore, a rigorous engineering course coach. The student is taking "${course}". Run a full Phase 1 Course Intake covering:
-
-1. Course X-Ray: major topic units in order (one sentence each), 3–5 foundational concepts, 2–3 common struggle topics and why, plain-English summary of what this course is and why engineers need it.
-2. Prerequisite Audit: specific prereq knowledge needed (precise, not vague), 2-question diagnostic per prereq, free resource for each gap.
-3. Semester Roadmap: 3–4 phases by content evolution, flag the hardest phase, weekly time budget, 1–2 free resources for the hardest phase.
-
-After your intake, engage in conversation — answer follow-up questions, go deeper on any unit, run the prereq quiz, or adjust the roadmap. Be rigorous but encouraging. Use markdown formatting.`,
-
-  2: (course) => `You are StudyCore, a rigorous engineering course coach for "${course}". You run Pre-Semester Deep Dives on specific topics.
-
-For each topic the student asks about, cover:
-1. Intuition — plain-English, vivid analogy, no jargon. End: "Does that mental model make sense?"
-2. Formal — precise definition, notation, formulas, each symbol explained, when to use this.
-3. Engineering Application — specific concrete example of where/why engineers use this.
-4. Common Mistakes — sign errors, unit traps, conceptual confusions.
-Then offer 3 practice problems (Easy → Medium → Hard).
-
-Stay conversational. Answer follow-ups. If a student is stuck on a practice problem, use the Socratic method — guide them, don't give the answer directly. Use markdown.`,
-
-  3: (course) => `You are StudyCore, a rigorous engineering course coach for "${course}". You help students with weekly workflow — previewing upcoming material, self-assessment quizzes, and problem set help.
-
-For Week Previews: 2-paragraph overview connecting to prior material, vocab/formula quick-reference card, 3 focus questions for lecture, one common trip-up and how to catch it.
-
-For Self-Assessment Quizzes: 5 questions (2 conceptual, 2 applied/calculation, 1 tricky edge case), answers with explanations, rated Easy/Medium/Hard.
-
-For Problem Set Help: use strict Socratic method. Ask what they've tried. Give ONE guiding question toward the next step. Name misconceptions without resolving them. Never give the answer directly — help the student find it themselves.
-
-Stay in the mode the student needs. Use markdown.`,
-
-  4: (course) => `You are StudyCore, a rigorous engineering course coach for "${course}". You build Problem-Solving Frameworks for unfamiliar problem types.
-
-For each problem type, cover:
-1. Problem Class — name it precisely.
-2. Generalizable Strategy — numbered steps, abstract enough for any version, explain WHY each step precedes the next.
-3. Decision Points — 2–3 moments where students go wrong, what the wrong path looks like.
-4. Three Variations — Easy → Medium → Hard with solutions highlighting which step each tests.
-5. Real Engineering Context — specific industry, system, and calculation where this appears.
-
-Then offer to derive why the strategy works from first principles. Stay conversational on follow-ups. Use markdown.`,
-
-  5: (course) => `You are StudyCore, a rigorous engineering course coach for "${course}". You run full Exam Prep sessions.
-
-Cover:
-1. Scope & Priority Map — rank topics by point weight × difficulty, what the student needs to DO per topic.
-2. Day-by-Day Schedule — concrete daily plan: topic, practice, time estimate. Front-load hard topics.
-3. Practice Exam — 30/50/20 easy/moderate/hard split, mixed conceptual + calculation, answers with key insight.
-4. Stress Test — for the 2 hardest topics: explain without formula, unusual version, looks-like-X-but-needs-Y problem.
-5. Cheat Sheet — top formulas, when to use each, sign errors, unit traps, edge cases.
-
-After the initial prep, stay available for follow-up questions, extra practice problems, or diving deeper. Use markdown.`,
+const SYS={
+  1:(c)=>`You are StudyCore, a rigorous engineering course coach for "${c}". Run a full Phase 1 Course Intake:
+1. Course X-Ray: major topic units in order (one sentence each), 3-5 foundational concepts everything else depends on, 2-3 topics students most commonly struggle with and why, plain-English summary of what this course is and why engineers need it.
+2. Prerequisite Audit: specific prereq knowledge (precise—not "calculus" but "derivatives of trig functions"), 2-question diagnostic per prereq, free resource for each gap (Khan Academy, MIT OCW, YouTube).
+3. Semester Roadmap: 3-4 phases by content evolution, flag the hardest phase and why, weekly time budget, 1-2 free resources for the hardest phase.
+After your intake stay in conversation—answer follow-ups, go deeper on any unit, run the prereq quiz. Use markdown formatting.`,
+  2:(c)=>`You are StudyCore, a rigorous engineering course coach for "${c}". You run Pre-Semester Deep Dives on specific topics.
+For each topic cover: (1) Intuition—plain-English vivid analogy, no jargon, end with "Does that mental model make sense?", (2) Formal—precise definition, notation, formulas with each symbol explained, (3) Engineering Application—specific concrete example, (4) Common Mistakes—sign errors, unit traps, conceptual confusions. Then offer 3 practice problems Easy→Medium→Hard.
+Stay conversational. For stuck students use Socratic method—guide, never give the answer directly. Use markdown.`,
+  3:(c)=>`You are StudyCore, a rigorous engineering course coach for "${c}". You support weekly workflow.
+Week Preview: 2-paragraph overview connecting to prior material, vocab/formula quick-reference card, 3 focus questions for lecture, one common trip-up and how to catch it.
+Self-Assessment Quiz: 5 questions (2 conceptual, 2 applied/calculation, 1 tricky edge case), answers with explanations, rated Easy/Medium/Hard.
+Problem Set Help: strict Socratic method—ask what they tried, give ONE guiding question at a time toward the next step, never give the answer directly. Use markdown.`,
+  4:(c)=>`You are StudyCore, a rigorous engineering course coach for "${c}". You build Problem-Solving Frameworks.
+For each problem type: (1) Problem Class—name precisely, (2) Generalizable Strategy—numbered steps with WHY each precedes the next, (3) Decision Points—2-3 moments where students go wrong and what the wrong path looks like, (4) Three Variations—Easy/Medium/Hard with solutions highlighting which step each tests, (5) Real Engineering Context—specific industry, system, and calculation.
+Offer to derive from first principles. Stay conversational on follow-ups. Use markdown.`,
+  5:(c)=>`You are StudyCore, a rigorous engineering course coach for "${c}". You run full Exam Prep sessions.
+Cover: (1) Scope & Priority Map—rank topics by point weight x difficulty, per topic what the student needs to DO not just know, (2) Day-by-Day Schedule—concrete daily plan front-loading hard topics with time estimates, (3) Practice Exam—30/50/20 easy/moderate/hard split mixed conceptual + calculation with answers and key insight, (4) Stress Test—for 2 hardest topics: explain without formula, unusual version, looks-like-X-but-needs-Y problem, (5) Cheat Sheet—top formulas, when to use each, sign errors, unit traps, edge cases.
+Stay available for follow-ups and extra practice. Use markdown.`,
 };
 
-/* ── Initial user message per phase ─────────────────────── */
-const STARTER = {
-  1: (course, extra) => `Please run a Phase 1 Course Intake for ${course}.${extra ? `\n\nAdditional context: ${extra}` : ""}`,
-  2: (course, topic) => `I want to deep-dive on "${topic}" from ${course}.`,
-  3: (course, week, mode) => {
-    const labels = { preview: "Week Preview", quiz: "Self-Assessment Quiz", ps: "Problem Set Help" };
-    return `Please run a ${labels[mode]} for Week ${week} of ${course}.`;
-  },
-  4: (course, pt) => `Build me a problem-solving framework for "${pt}" in ${course}.`,
-  5: (course, topics, days, fmt) => `Run a full Exam Prep for ${course}.\n\nTopics: ${topics}\nDays until exam: ${days}\nExam format: ${fmt}`,
-};
+function buildStarter(id,course,cfg){
+  if(id===1)return `Please run a Phase 1 Course Intake for ${course}.${cfg.extra?"\n\nAdditional context: "+cfg.extra:""}`;
+  if(id===2)return `I want to deep-dive on "${cfg.topic}" from ${course}.`;
+  if(id===3){const l={preview:"Week Preview",quiz:"Self-Assessment Quiz",ps:"Problem Set Help"};return `Please run a ${l[cfg.tab||"preview"]} for Week ${cfg.week||"current"} of ${course}.`;}
+  if(id===4)return `Build me a problem-solving framework for "${cfg.pt}" in ${course}.`;
+  if(id===5)return `Run a full Exam Prep for ${course}.\nTopics: ${cfg.topics}\nDays until exam: ${cfg.days||7}\nExam format: ${cfg.fmt||"mixed"}`;
+  return "";
+}
+function cfgOk(id,cfg){
+  if(id===2)return !!(cfg.topic||"").trim();
+  if(id===3)return !!(cfg.week||"").trim();
+  if(id===4)return !!(cfg.pt||"").trim();
+  if(id===5)return !!(cfg.topics||"").trim();
+  return true;
+}
 
-/* ── Markdown → HTML (lightweight) ─────────────────────── */
-function mdToHtml(text) {
+function md(text){
   return text
     .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/```([\s\S]*?)```/g, "<pre>$1</pre>")
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    .replace(/^\s*[-*] (.+)$/gm, "<li>$1</li>")
-    .replace(/(<li>.*<\/li>\n?)+/g, s => `<ul>${s}</ul>`)
-    .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
-    .replace(/\n\n/g, "</p><p>")
-    .replace(/^(?!<[hup]|<li|<pre|<code)(.+)$/gm, "$1")
-    .replace(/\n/g, "<br>");
+    .replace(/```([\s\S]*?)```/g,"<pre>$1</pre>")
+    .replace(/`([^`\n]+)`/g,"<code>$1</code>")
+    .replace(/\*\*([^*\n]+)\*\*/g,"<strong>$1</strong>")
+    .replace(/\*([^*\n]+)\*/g,"<em>$1</em>")
+    .replace(/^### (.+)$/gm,"<h3>$1</h3>")
+    .replace(/^## (.+)$/gm,"<h2>$1</h2>")
+    .replace(/^# (.+)$/gm,"<h1>$1</h1>")
+    .replace(/^---$/gm,"<hr>")
+    .replace(/^\s*[-*] (.+)$/gm,"<li>$1</li>")
+    .replace(/^\d+\. (.+)$/gm,"<li>$1</li>")
+    .split("\n\n").map(b=>{
+      if(/^<[h1-3hli]/.test(b.trim())||b.includes("<li>"))return b;
+      return `<p>${b.replace(/\n/g,"<br>")}</p>`;
+    }).join("\n")
+    .replace(/(<li>.*?<\/li>\n?)+/gs,s=>`<ul>${s}</ul>`);
 }
 
-function MsgBubble({ content }) {
-  return <div className="msg-bubble" dangerouslySetInnerHTML={{__html: `<p>${mdToHtml(content)}</p>`}} />;
+function Bubble({content}){
+  return <div className="bubble" dangerouslySetInnerHTML={{__html:md(content)}}/>;
 }
 
-/* ── Config forms per phase ─────────────────────────────── */
-function CfgPh1({ cfg, setCfg }) {
-  return (
-    <div className="cfg-field">
-      <span className="cfg-lbl">Syllabus / extra context (optional)</span>
-      <input className="cfg-inp wide" placeholder="Paste syllabus or say 'typical state university offering'..."
-        value={cfg.extra||""} onChange={e=>setCfg({...cfg,extra:e.target.value})} />
-    </div>
-  );
-}
-function CfgPh2({ cfg, setCfg }) {
-  return (
-    <div className="cfg-field">
-      <span className="cfg-lbl">Topic to deep-dive</span>
-      <input className="cfg-inp med" placeholder="e.g. Laplace transforms, Bode plots..."
-        value={cfg.topic||""} onChange={e=>setCfg({...cfg,topic:e.target.value})} />
-    </div>
-  );
-}
-function CfgPh3({ cfg, setCfg }) {
+/* Config forms */
+function CfgPh1({cfg,set}){return(
+  <div className="cfg-field">
+    <span className="cfg-lbl">Syllabus / extra context (optional)</span>
+    <input className="cfg-inp wide" placeholder="Paste syllabus or say 'typical state university offering'..."
+      value={cfg.extra||""} onChange={e=>set({...cfg,extra:e.target.value})}/>
+  </div>
+);}
+function CfgPh2({cfg,set}){return(
+  <div className="cfg-field">
+    <span className="cfg-lbl">Topic to deep-dive</span>
+    <input className="cfg-inp med" placeholder="e.g. Laplace transforms, Bode plots..."
+      value={cfg.topic||""} onChange={e=>set({...cfg,topic:e.target.value})}/>
+  </div>
+);}
+function CfgPh3({cfg,set}){
   const tabs=[["preview","Week Preview"],["quiz","Self-Assessment"],["ps","Problem Set Help"]];
   return <>
     <div className="cfg-field">
       <span className="cfg-lbl">Week</span>
-      <input className="cfg-inp sm" placeholder="e.g. 4"
-        value={cfg.week||""} onChange={e=>setCfg({...cfg,week:e.target.value})} />
+      <input className="cfg-inp sm" placeholder="e.g. 4" value={cfg.week||""} onChange={e=>set({...cfg,week:e.target.value})}/>
     </div>
     <div className="cfg-field">
       <span className="cfg-lbl">Mode</span>
-      <div className="cfg-tabs">
-        {tabs.map(([k,v])=>(
-          <button key={k} className={`cfg-tab${(cfg.tab||"preview")===k?" on":""}`}
-            onClick={()=>setCfg({...cfg,tab:k})}>{v}</button>
-        ))}
-      </div>
+      <div className="cfg-tabs">{tabs.map(([k,v])=>(
+        <button key={k} className={`cfg-tab${(cfg.tab||"preview")===k?" on":""}`} onClick={()=>set({...cfg,tab:k})}>{v}</button>
+      ))}</div>
     </div>
   </>;
 }
-function CfgPh4({ cfg, setCfg }) {
-  return (
-    <div className="cfg-field">
-      <span className="cfg-lbl">Problem type</span>
-      <input className="cfg-inp wide" placeholder="e.g. 'Thevenin equivalent with dependent sources'..."
-        value={cfg.pt||""} onChange={e=>setCfg({...cfg,pt:e.target.value})} />
-    </div>
-  );
-}
-function CfgPh5({ cfg, setCfg }) {
-  return <>
-    <div className="cfg-field">
-      <span className="cfg-lbl">Topics on exam</span>
-      <input className="cfg-inp wide" placeholder="e.g. Chapters 1–6: Laplace transforms, convolution..."
-        value={cfg.topics||""} onChange={e=>setCfg({...cfg,topics:e.target.value})} />
-    </div>
-    <div className="cfg-field">
-      <span className="cfg-lbl">Days until exam</span>
-      <input className="cfg-inp sm" type="number" min="1" max="30"
-        value={cfg.days||"7"} onChange={e=>setCfg({...cfg,days:e.target.value})} />
-    </div>
-    <div className="cfg-field">
-      <span className="cfg-lbl">Format</span>
-      <select className="cfg-sel" value={cfg.fmt||"mixed (conceptual + calculation)"}
-        onChange={e=>setCfg({...cfg,fmt:e.target.value})}>
-        <option>mixed (conceptual + calculation)</option>
-        <option>multiple choice</option>
-        <option>open-ended problems only</option>
-        <option>short answer + long problems</option>
-        <option>cheat sheet permitted</option>
-      </select>
-    </div>
-  </>;
-}
-const CFG_COMPS = [null,CfgPh1,CfgPh2,CfgPh3,CfgPh4,CfgPh5];
+function CfgPh4({cfg,set}){return(
+  <div className="cfg-field">
+    <span className="cfg-lbl">Problem type</span>
+    <input className="cfg-inp wide" placeholder="e.g. Thevenin equivalent with dependent sources..."
+      value={cfg.pt||""} onChange={e=>set({...cfg,pt:e.target.value})}/>
+  </div>
+);}
+function CfgPh5({cfg,set}){return <>
+  <div className="cfg-field">
+    <span className="cfg-lbl">Topics on exam</span>
+    <input className="cfg-inp wide" placeholder="e.g. Chapters 1-6: Laplace, convolution, Bode..."
+      value={cfg.topics||""} onChange={e=>set({...cfg,topics:e.target.value})}/>
+  </div>
+  <div className="cfg-field">
+    <span className="cfg-lbl">Days until exam</span>
+    <input className="cfg-inp sm" type="number" min="1" max="30" value={cfg.days||"7"} onChange={e=>set({...cfg,days:e.target.value})}/>
+  </div>
+  <div className="cfg-field">
+    <span className="cfg-lbl">Format</span>
+    <select className="cfg-sel" value={cfg.fmt||"mixed (conceptual + calculation)"} onChange={e=>set({...cfg,fmt:e.target.value})}>
+      <option>mixed (conceptual + calculation)</option>
+      <option>multiple choice</option>
+      <option>open-ended problems only</option>
+      <option>short answer + long problems</option>
+      <option>cheat sheet permitted</option>
+    </select>
+  </div>
+</>;}
+const CFG=[null,CfgPh1,CfgPh2,CfgPh3,CfgPh4,CfgPh5];
 
-function cfgValid(phaseId, cfg) {
-  if (phaseId===2) return !!(cfg.topic||"").trim();
-  if (phaseId===3) return !!(cfg.week||"").trim();
-  if (phaseId===4) return !!(cfg.pt||"").trim();
-  if (phaseId===5) return !!(cfg.topics||"").trim();
-  return true;
-}
+const defaultCfgs=()=>({1:{extra:""},2:{topic:""},3:{week:"",tab:"preview"},4:{pt:""},5:{topics:"",days:"7",fmt:"mixed (conceptual + calculation)"}});
+const mkCourse=(name,color)=>({id:Date.now()+Math.random(),name,color,cfgs:defaultCfgs(),chats:{1:null,2:null,3:null,4:null,5:null}});
 
-function cfgStarterMsg(phaseId, course, cfg) {
-  if (phaseId===1) return STARTER[1](course, cfg.extra||"");
-  if (phaseId===2) return STARTER[2](course, cfg.topic||"");
-  if (phaseId===3) return STARTER[3](course, cfg.week||"current", cfg.tab||"preview");
-  if (phaseId===4) return STARTER[4](course, cfg.pt||"");
-  if (phaseId===5) return STARTER[5](course, cfg.topics||"", cfg.days||"7", cfg.fmt||"mixed");
-  return "";
-}
+/* ── ChatPane ── */
+function ChatPane({courseName,phase,phInfo,apiKey,chat,setChat,onNewSession}){
+  const [input,setInput]=useState("");
+  const [busy,setBusy]=useState(false);
+  const [err,setErr]=useState(null);
+  const bottomRef=useRef();
+  const starterSent=useRef(false);
+  const msgs=chat?.messages||[];
 
-/* ── Course / phase state ───────────────────────────────── */
-const defaultCfg = () => ({1:{extra:""},2:{topic:""},3:{week:"",tab:"preview"},4:{pt:""},5:{topics:"",days:"7",fmt:"mixed (conceptual + calculation)"}});
+  useEffect(()=>{bottomRef.current?.scrollIntoView({behavior:"smooth"});},[msgs.length,msgs[msgs.length-1]?.content]);
 
-const mkCourse = (name, color) => ({
-  id: Date.now()+Math.random(), name, color,
-  cfgs: defaultCfg(),
-  chats: {1:null,2:null,3:null,4:null,5:null},
-});
-
-/* ── Chat component ─────────────────────────────────────── */
-function ChatPane({ course, phase, phInfo, apiKey, chat, setChat, onBack }) {
-  const [input, setInput] = useState("");
-  const [streaming, setStreaming] = useState(false);
-  const [error, setError] = useState(null);
-  const bottomRef = useRef();
-  const taRef = useRef();
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({behavior:"smooth"});
-  }, [chat]);
-
-  const sendMessage = useCallback(async (userText) => {
-    if (!userText.trim() || streaming || !apiKey) return;
-    setError(null);
-
-    const userMsg = {role:"user", content: userText.trim()};
-    const newHistory = [...(chat.messages||[]), userMsg];
-    setChat({...chat, messages: newHistory});
+  const send=useCallback(async(text)=>{
+    if(!text?.trim()||busy||!apiKey)return;
+    setErr(null);
+    const userMsg={role:"user",content:text.trim()};
+    const history=[...msgs,userMsg];
+    setChat(prev=>({...prev,messages:[...history,{role:"assistant",content:""}]}));
     setInput("");
-    setStreaming(true);
-
-    const assistantMsg = {role:"assistant", content:""};
-    setChat(prev => ({...prev, messages:[...newHistory, assistantMsg]}));
-
-    try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+    setBusy(true);
+    try{
+      const res=await fetch("https://api.anthropic.com/v1/messages",{
         method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "x-api-key": apiKey,
-          "anthropic-version":"2023-06-01",
-          "anthropic-beta":"messages-2023-12-15"
-        },
-        body: JSON.stringify({
-          model:"claude-sonnet-4-20250514",
-          max_tokens:2048,
-          system: SYSTEM[phase](course),
-          stream: true,
-          messages: newHistory.map(m=>({role:m.role,content:m.content}))
-        })
+        headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01","anthropic-beta":"messages-2023-12-15"},
+        body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2048,system:SYS[phase](courseName),stream:true,messages:history.map(m=>({role:m.role,content:m.content}))})
       });
-
-      if (!res.ok) {
-        const err = await res.json().catch(()=>({error:{message:res.statusText}}));
-        throw new Error(err?.error?.message || `API error ${res.status}`);
-      }
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let accumulated = "";
-
-      while (true) {
-        const {done, value} = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, {stream:true});
-        const lines = chunk.split("\n");
-        for (const line of lines) {
-          if (!line.startsWith("data:")) continue;
-          const data = line.slice(5).trim();
-          if (data==="[DONE]") continue;
-          try {
-            const parsed = JSON.parse(data);
-            if (parsed.type==="content_block_delta" && parsed.delta?.text) {
-              accumulated += parsed.delta.text;
-              setChat(prev => {
-                const msgs = [...prev.messages];
-                msgs[msgs.length-1] = {role:"assistant", content:accumulated};
-                return {...prev, messages:msgs};
-              });
-            }
-          } catch(e){}
+      if(!res.ok){const e=await res.json().catch(()=>({error:{message:res.statusText}}));throw new Error(e?.error?.message||"API error "+res.status);}
+      const reader=res.body.getReader(),dec=new TextDecoder();
+      let acc="";
+      while(true){
+        const {done,value}=await reader.read();if(done)break;
+        for(const line of dec.decode(value,{stream:true}).split("\n")){
+          if(!line.startsWith("data:"))continue;
+          const d=line.slice(5).trim();if(d==="[DONE]")continue;
+          try{const p=JSON.parse(d);if(p.type==="content_block_delta"&&p.delta?.text){acc+=p.delta.text;setChat(prev=>{const m=[...prev.messages];m[m.length-1]={role:"assistant",content:acc};return{...prev,messages:m};});}}catch(e){}
         }
       }
-    } catch(e) {
-      setError(e.message);
-      setChat(prev => {
-        const msgs = prev.messages.slice(0,-1);
-        return {...prev, messages:msgs};
-      });
-    } finally {
-      setStreaming(false);
+    }catch(e){setErr(e.message);setChat(prev=>({...prev,messages:prev.messages.slice(0,-1)}));}
+    finally{setBusy(false);}
+  },[msgs,apiKey,courseName,phase,busy]);
+
+  useEffect(()=>{
+    if(chat?.starter&&!starterSent.current&&msgs.length===0){
+      starterSent.current=true;
+      setTimeout(()=>send(chat.starter),300);
     }
-  }, [chat, apiKey, course, phase, streaming]);
+  },[]);
 
-  const handleKey = (e) => {
-    if (e.key==="Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(input); }
-  };
+  const onKey=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(input);}};
+  const typing=busy&&msgs[msgs.length-1]?.content==="";
 
-  return (
+  return(
     <div className="chat-wrap">
       <div className="chat-top">
         <div className="chat-phase-info">
           <span className="chat-phase-icon">{phInfo.icon}</span>
-          <div>
-            <div className="chat-phase-title">{phInfo.label}</div>
-            <div className="chat-phase-desc">{course}</div>
-          </div>
+          <div><div className="chat-phase-title">{phInfo.label}</div><div className="chat-phase-desc">{courseName}</div></div>
         </div>
         <div className="chat-actions">
-          <button className="chat-action-btn" onClick={onBack}>← Back</button>
-          <button className="chat-action-btn" onClick={() => setChat({...chat, messages:[]})}>Clear chat</button>
+          <button className="chat-btn" onClick={onNewSession}>← New session</button>
+          <button className="chat-btn" onClick={()=>setChat({messages:[],starter:null})}>Clear</button>
         </div>
       </div>
-
       <div className="messages">
-        {(chat.messages||[]).map((msg, i) => (
-          <div key={i} className={`msg ${msg.role}`}>
-            <div className="msg-avatar">{msg.role==="user" ? "👤" : "🎓"}</div>
-            {msg.role==="user"
-              ? <div className="msg-bubble">{msg.content}</div>
-              : <MsgBubble content={msg.content} />
-            }
+        {msgs.map((m,i)=>(
+          <div key={i} className={`msg ${m.role}`}>
+            <div className="msg-av">{m.role==="user"?"👤":"🎓"}</div>
+            {m.role==="user"?<div className="bubble">{m.content}</div>:<Bubble content={m.content}/>}
           </div>
         ))}
-        {streaming && (chat.messages||[]).slice(-1)[0]?.role==="assistant" && (chat.messages||[]).slice(-1)[0]?.content==="" && (
-          <div className="msg assistant">
-            <div className="msg-avatar">🎓</div>
-            <div className="msg-bubble">
-              <span className="typing-dot"></span>
-              <span className="typing-dot"></span>
-              <span className="typing-dot"></span>
-            </div>
-          </div>
-        )}
-        {error && <div className="err-msg">⚠️ {error}</div>}
-        <div ref={bottomRef} />
+        {typing&&<div className="msg assistant"><div className="msg-av">🎓</div><div className="bubble"><span className="tdot"/><span className="tdot"/><span className="tdot"/></div></div>}
+        {err&&<div className="err">⚠️ {err} — check your API key and try again.</div>}
+        <div ref={bottomRef}/>
       </div>
-
       <div className="input-bar">
         <div className="input-row">
-          <textarea
-            ref={taRef}
-            className="chat-inp"
-            placeholder="Ask a follow-up, request a practice problem, or go deeper on any topic…"
-            rows={1}
-            value={input}
-            onChange={e=>setInput(e.target.value)}
-            onKeyDown={handleKey}
-            disabled={streaming || !apiKey}
-          />
-          <button className="send-btn" onClick={()=>sendMessage(input)} disabled={!input.trim()||streaming||!apiKey}>↑</button>
+          <textarea className="chat-inp" rows={1} placeholder="Ask a follow-up, request practice problems, or go deeper…"
+            value={input} onChange={e=>setInput(e.target.value)} onKeyDown={onKey} disabled={busy||!apiKey}/>
+          <button className="send-btn" onClick={()=>send(input)} disabled={!input.trim()||busy||!apiKey}>↑</button>
         </div>
-        <div className="input-hint">Enter to send · Shift+Enter for new line</div>
+        <div className="hint">Enter to send · Shift+Enter for new line</div>
       </div>
     </div>
   );
 }
 
-/* ── Config screen before chat starts ───────────────────── */
-function ConfigScreen({ course, phase, phInfo, cfg, setCfg, apiKey, onStart }) {
-  const CfgComp = CFG_COMPS[phase];
-  const valid = cfgValid(phase, cfg) && !!apiKey;
-
-  return (
+/* ── ConfigScreen ── */
+function ConfigScreen({courseName,phase,phInfo,cfg,setCfg,apiKey,onStart}){
+  const CfgComp=CFG[phase];
+  return(
     <div className="chat-wrap">
       <div className="chat-top">
         <div className="chat-phase-info">
           <span className="chat-phase-icon">{phInfo.icon}</span>
-          <div>
-            <div className="chat-phase-title">{phInfo.label}</div>
-            <div className="chat-phase-desc">{phInfo.desc}</div>
-          </div>
+          <div><div className="chat-phase-title">{phInfo.label}</div><div className="chat-phase-desc">{phInfo.desc}</div></div>
         </div>
       </div>
       <div className="cfg">
         <div className="cfg-grid">
-          {CfgComp && <CfgComp cfg={cfg} setCfg={setCfg} />}
+          {CfgComp&&<CfgComp cfg={cfg} set={setCfg}/>}
           <div className="cfg-field" style={{alignSelf:"flex-end"}}>
-            <button className="start-btn" onClick={onStart} disabled={!valid}>
-              {apiKey ? "Start session →" : "Add API key to start"}
+            <button className="start-btn" onClick={onStart} disabled={!cfgOk(phase,cfg)||!apiKey}>
+              {apiKey?"Start session →":"Add API key to begin"}
             </button>
           </div>
         </div>
       </div>
-      <div className="messages" style={{justifyContent:"center",alignItems:"center"}}>
-        <div style={{textAlign:"center",color:"var(--ink3)",fontFamily:"var(--ft)",fontSize:13,fontStyle:"italic",maxWidth:400}}>
-          <div style={{fontSize:32,marginBottom:12}}>{phInfo.icon}</div>
-          <div>Configure your session above, then hit <strong style={{fontStyle:"normal",color:"var(--acc)"}}>Start</strong> to begin a live coaching conversation.</div>
-        </div>
+      <div className="cfg-hint">
+        <div><div style={{fontSize:32,marginBottom:12}}>{phInfo.icon}</div>Configure above, then hit <strong style={{color:"var(--acc)"}}>Start session</strong> to begin a live coaching conversation.</div>
       </div>
     </div>
   );
 }
 
-/* ── Root App ───────────────────────────────────────────── */
-function App() {
-  const [courses, setCourses] = useState([mkCourse("Signals & Systems", COLORS[0])]);
-  const [activeCourse, setActiveCourse] = useState(() => courses[0].id);
-  const [activePhase, setActivePhase] = useState(null);
-  const [newName, setNewName] = useState("");
-  const [apiKeyInput, setApiKeyInput] = useState("");
-  const [apiKey, setApiKey] = useState(() => sessionStorage.getItem("sc_key")||"");
-  const [showKeyInput, setShowKeyInput] = useState(!sessionStorage.getItem("sc_key"));
-  const addInpRef = useRef();
+/* ── App ── */
+function App(){
+  const [courses,setCourses]=useState([mkCourse("Signals & Systems",COLORS[0])]);
+  const [activeId,setActiveId]=useState(()=>courses[0].id);
+  const [activePhase,setActivePhase]=useState(null);
+  const [newName,setNewName]=useState("");
+  const [keyDraft,setKeyDraft]=useState("");
+  const [apiKey,setApiKey]=useState(()=>sessionStorage.getItem("sc_key")||"");
+  const [showKey,setShowKey]=useState(!sessionStorage.getItem("sc_key"));
 
-  const course = courses.find(c=>c.id===activeCourse);
+  const course=courses.find(c=>c.id===activeId);
+  const phInfo=activePhase?PHASES[activePhase-1]:null;
+  const chat=course&&activePhase?course.chats[activePhase]:null;
+  const cfg=course&&activePhase?course.cfgs[activePhase]:{};
 
-  const saveKey = () => {
-    const k = apiKeyInput.trim();
-    if (!k.startsWith("sk-")) { alert("That doesn't look like a valid Anthropic API key (should start with sk-ant-…)"); return; }
-    sessionStorage.setItem("sc_key", k);
-    setApiKey(k);
-    setShowKeyInput(false);
-    setApiKeyInput("");
+  const saveKey=()=>{
+    const k=keyDraft.trim();
+    if(!k.startsWith("sk-")){alert("Doesn't look like a valid Anthropic key (should start with sk-ant-…)");return;}
+    sessionStorage.setItem("sc_key",k);setApiKey(k);setShowKey(false);setKeyDraft("");
   };
-  const clearKey = () => { sessionStorage.removeItem("sc_key"); setApiKey(""); setShowKeyInput(true); };
+  const clearKey=()=>{sessionStorage.removeItem("sc_key");setApiKey("");setShowKey(true);};
 
-  const setCourseField = (field, val) => {
-    setCourses(cs=>cs.map(c=>c.id===activeCourse?{...c,[field]:val}:c));
-  };
+  const upd=(id,fn)=>setCourses(cs=>cs.map(c=>c.id===id?fn(c):c));
+  const setChat=(pid,val)=>upd(activeId,c=>({...c,chats:{...c.chats,[pid]:val}}));
+  const setCfg=(pid,val)=>upd(activeId,c=>({...c,cfgs:{...c.cfgs,[pid]:val}}));
 
-  const setCfg = (phaseId, val) => {
-    setCourses(cs=>cs.map(c=>c.id===activeCourse?{...c,cfgs:{...c.cfgs,[phaseId]:val}}:c));
-  };
-
-  const setChat = (phaseId, val) => {
-    setCourses(cs=>cs.map(c=>c.id===activeCourse?{...c,chats:{...c.chats,[phaseId]:val}}:c));
+  const startSession=()=>{
+    const starter=buildStarter(activePhase,course.name,cfg);
+    setChat(activePhase,{messages:[],starter});
   };
 
-  const startSession = () => {
-    const cfg = course.cfgs[activePhase];
-    const starterMsg = cfgStarterMsg(activePhase, course.name, cfg);
-    const initChat = { messages:[], started: true };
-    setCourses(cs=>cs.map(c=>c.id===activeCourse?{...c,chats:{...c.chats,[activePhase]:initChat}}:c));
-    // Trigger the first message send via a small delay
-    setTimeout(()=>{
-      setCourses(cs=>{
-        const course = cs.find(c=>c.id===activeCourse);
-        if (!course) return cs;
-        return cs.map(c=>c.id===activeCourse?{...c,chats:{...c.chats,[activePhase]:{...initChat,pendingStarter:starterMsg}}}:c);
-      });
-    },50);
+  const addCourse=()=>{
+    if(!newName.trim())return;
+    const nc=mkCourse(newName.trim(),COLORS[courses.length%COLORS.length]);
+    setCourses(cs=>[...cs,nc]);setActiveId(nc.id);setActivePhase(null);setNewName("");
+  };
+  const delCourse=(id)=>{
+    const rest=courses.filter(c=>c.id!==id);setCourses(rest);
+    if(activeId===id){setActiveId(rest[0]?.id??null);setActivePhase(null);}
   };
 
-  const addCourse = () => {
-    if (!newName.trim()) return;
-    const color = COLORS[courses.length%COLORS.length];
-    const nc = mkCourse(newName.trim(), color);
-    setCourses(cs=>[...cs,nc]);
-    setActiveCourse(nc.id);
-    setActivePhase(null);
-    setNewName("");
-  };
-
-  const delCourse = (id) => {
-    const remaining = courses.filter(c=>c.id!==id);
-    setCourses(remaining);
-    if (activeCourse===id) { setActiveCourse(remaining[0]?.id??null); setActivePhase(null); }
-  };
-
-  const switchCourse = (id) => { setActiveCourse(id); setActivePhase(null); };
-
-  const phInfo = activePhase ? PHASES[activePhase-1] : null;
-  const chat = course && activePhase ? course.chats[activePhase] : null;
-  const cfg = course && activePhase ? course.cfgs[activePhase] : {};
-
-  /* Auto-send starter message when session is first created */
-  const ChatWithStarter = ({ course, phase, phInfo, apiKey, chat, setChat, onBack }) => {
-    const sentRef = useRef(false);
-    const [localChat, setLocalChat] = useState(chat);
-
-    useEffect(()=>{
-      if (chat?.pendingStarter && !sentRef.current) {
-        sentRef.current = true;
-        const starter = chat.pendingStarter;
-        // Remove pendingStarter, set initial message
-        const cleaned = { messages:[], started:true };
-        setChat(cleaned);
-        setLocalChat(cleaned);
-        // small delay then trigger send
-        setTimeout(()=>{
-          setLocalChat(prev=>({...prev, _trigger: starter}));
-        },100);
-      }
-    },[]);
-
-    return <ChatPane
-      course={course} phase={phase} phInfo={phInfo} apiKey={apiKey}
-      chat={localChat||chat}
-      setChat={(v)=>{ setLocalChat(v); setChat(v); }}
-      onBack={onBack}
-      initialSend={localChat?._trigger}
-    />;
-  };
-
-  return (
+  return(
     <div className="sc">
       <header className="hdr">
         <div className="logo">
           <div className="logo-mark" style={{background:course?.color??"var(--acc)"}}>🎓</div>
-          <span className="logo-text">Study<em>Core</em> <span className="logo-sub">LIVE</span></span>
+          <span className="logo-text">Study<em>Core</em></span>
+          <span className="logo-sub">LIVE</span>
         </div>
         <div className="hdr-right">
-          {showKeyInput ? (
-            <div className="key-bar">
+          {showKey?(
+            <>
               <input className="key-inp" type="password" placeholder="Paste Anthropic API key (sk-ant-…)"
-                value={apiKeyInput} onChange={e=>setApiKeyInput(e.target.value)}
-                onKeyDown={e=>e.key==="Enter"&&saveKey()} />
-              <button className="key-btn" onClick={saveKey}>Save key</button>
-            </div>
-          ) : (
-            <div className="key-bar">
-              <span className="key-status ok">✓ API key active</span>
+                value={keyDraft} onChange={e=>setKeyDraft(e.target.value)} onKeyDown={e=>e.key==="Enter"&&saveKey()}/>
+              <button className="key-btn save" onClick={saveKey}>Save key</button>
+            </>
+          ):(
+            <>
+              <span className="key-status">✓ API key active</span>
               <button className="key-btn clear" onClick={clearKey}>Remove</button>
-            </div>
+            </>
           )}
         </div>
       </header>
 
-      {!apiKey && (
-        <div className="no-key-banner">
-          <strong>Add your Anthropic API key</strong> in the top-right to start live coaching sessions. Your key stays in this browser tab only — never stored on any server.
-        </div>
-      )}
+      {!apiKey&&<div className="banner"><strong>Add your Anthropic API key</strong> above to start live sessions. Key stays in this browser tab only — never sent to any server.</div>}
 
       <div className="body">
         <nav className="nav">
           <div className="nav-section">
             <div className="nav-lbl">My Courses</div>
             {courses.map(c=>(
-              <button key={c.id} className={`course-item${activeCourse===c.id?" on":""}`} onClick={()=>switchCourse(c.id)}>
-                <span className="course-dot" style={{background:c.color}} />
+              <button key={c.id} className={`course-item${activeId===c.id?" on":""}`}
+                onClick={()=>{setActiveId(c.id);setActivePhase(null);}}>
+                <span className="course-dot" style={{background:c.color}}/>
                 <span className="course-name">{c.name}</span>
-                {courses.length>1&&(
-                  <span className="course-del" onClick={e=>{e.stopPropagation();delCourse(c.id);}}>×</span>
-                )}
+                {courses.length>1&&<span className="course-del" onClick={e=>{e.stopPropagation();delCourse(c.id);}}>×</span>}
               </button>
             ))}
             <div className="add-form">
-              <input ref={addInpRef} className="add-inp" placeholder="Add course…"
-                value={newName} onChange={e=>setNewName(e.target.value)}
-                onKeyDown={e=>e.key==="Enter"&&addCourse()} />
+              <input className="add-inp" placeholder="Add course…" value={newName}
+                onChange={e=>setNewName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addCourse()}/>
               <button className="add-btn" onClick={addCourse} disabled={!newName.trim()}>+</button>
             </div>
           </div>
-
-          <div className="nav-div" />
-
+          <div className="nav-div"/>
           <div style={{padding:"0 0 4px"}}>
             <div className="nav-lbl" style={{padding:"0 14px",marginBottom:6}}>Phases</div>
             {PHASES.map(p=>(
-              <button key={p.id}
-                className={`ph-btn${activePhase===p.id&&activeCourse?" on":""}`}
-                onClick={()=>{if(activeCourse)setActivePhase(p.id);}}
-                style={{opacity:activeCourse?1:0.4,cursor:activeCourse?"pointer":"default"}}>
+              <button key={p.id} className={`ph-btn${activePhase===p.id&&activeId?" on":""}`}
+                onClick={()=>{if(activeId)setActivePhase(p.id);}}
+                style={{opacity:activeId?1:0.4,cursor:activeId?"pointer":"default"}}>
                 <span className="ph-icon">{p.icon}</span>
-                <span>
-                  <span className="ph-name">{p.label}</span>
-                  <span className="ph-desc">{p.desc}</span>
-                </span>
+                <span><span className="ph-name">{p.label}</span><span className="ph-desc">{p.desc}</span></span>
               </button>
             ))}
           </div>
         </nav>
 
         <main className="main">
-          {!course ? (
+          {!course?(
             <div style={{flex:1,display:"flex",alignItems:"flex-start",justifyContent:"center"}}>
               <div className="empty">
                 <div className="empty-icon">📚</div>
@@ -756,10 +503,10 @@ function App() {
                 <p className="empty-p">Type a course name in the sidebar and press Enter or + to get started.</p>
               </div>
             </div>
-          ) : !activePhase ? (
+          ):!activePhase?(
             <>
               <div className="course-hdr">
-                <span className="course-dot-lg" style={{background:course.color}} />
+                <span className="course-dot-lg" style={{background:course.color}}/>
                 <span className="course-title"><em>{course.name}</em></span>
               </div>
               <div className="ph-cards-wrap">
@@ -774,172 +521,29 @@ function App() {
                 </div>
               </div>
             </>
-          ) : chat && chat.started ? (
+          ):chat&&chat.messages!==undefined?(
             <ChatPane
-              course={course.name}
+              key={activeId+"-"+activePhase}
+              courseName={course.name}
               phase={activePhase}
               phInfo={phInfo}
               apiKey={apiKey}
               chat={chat}
-              setChat={(v)=>setChat(activePhase,v)}
-              onBack={()=>setChat(activePhase,null)}
-              key={`${activeCourse}-${activePhase}`}
+              setChat={v=>setChat(activePhase,v)}
+              onNewSession={()=>setChat(activePhase,null)}
             />
-          ) : (
+          ):(
             <ConfigScreen
-              course={course.name}
+              courseName={course.name}
               phase={activePhase}
               phInfo={phInfo}
               cfg={cfg}
-              setCfg={(v)=>setCfg(activePhase,v)}
+              setCfg={v=>setCfg(activePhase,v)}
               apiKey={apiKey}
               onStart={startSession}
             />
           )}
         </main>
-      </div>
-    </div>
-  );
-}
-
-/* ── ChatPane with auto-send starter ───────────────────── */
-function ChatPane({ course, phase, phInfo, apiKey, chat, setChat, onBack, initialSend }) {
-  const [input, setInput] = useState("");
-  const [streaming, setStreaming] = useState(false);
-  const [error, setError] = useState(null);
-  const bottomRef = useRef();
-  const sentStarter = useRef(false);
-
-  useEffect(()=>{
-    bottomRef.current?.scrollIntoView({behavior:"smooth"});
-  },[chat?.messages]);
-
-  const sendMessage = useCallback(async (userText) => {
-    if (!userText?.trim()||streaming||!apiKey) return;
-    setError(null);
-    const userMsg = {role:"user",content:userText.trim()};
-    const newHistory = [...(chat?.messages||[]),userMsg];
-    setChat({...chat,messages:newHistory});
-    setInput("");
-    setStreaming(true);
-    setChat(prev=>({...prev,messages:[...newHistory,{role:"assistant",content:""}]}));
-
-    try {
-      const res = await fetch("https://api.anthropic.com/v1/messages",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "x-api-key":apiKey,
-          "anthropic-version":"2023-06-01",
-          "anthropic-beta":"messages-2023-12-15"
-        },
-        body:JSON.stringify({
-          model:"claude-sonnet-4-20250514",
-          max_tokens:2048,
-          system:SYSTEM[phase](course),
-          stream:true,
-          messages:newHistory.map(m=>({role:m.role,content:m.content}))
-        })
-      });
-
-      if (!res.ok) {
-        const err=await res.json().catch(()=>({error:{message:res.statusText}}));
-        throw new Error(err?.error?.message||`API error ${res.status}`);
-      }
-
-      const reader=res.body.getReader();
-      const decoder=new TextDecoder();
-      let accumulated="";
-
-      while(true){
-        const {done,value}=await reader.read();
-        if(done)break;
-        const lines=decoder.decode(value,{stream:true}).split("\n");
-        for(const line of lines){
-          if(!line.startsWith("data:"))continue;
-          const data=line.slice(5).trim();
-          if(data==="[DONE]")continue;
-          try{
-            const p=JSON.parse(data);
-            if(p.type==="content_block_delta"&&p.delta?.text){
-              accumulated+=p.delta.text;
-              setChat(prev=>{
-                const msgs=[...prev.messages];
-                msgs[msgs.length-1]={role:"assistant",content:accumulated};
-                return {...prev,messages:msgs};
-              });
-            }
-          }catch(e){}
-        }
-      }
-    } catch(e){
-      setError(e.message);
-      setChat(prev=>({...prev,messages:prev.messages.slice(0,-1)}));
-    } finally {
-      setStreaming(false);
-    }
-  },[chat,apiKey,course,phase,streaming]);
-
-  // Auto-send starter on mount
-  useEffect(()=>{
-    if (initialSend && !sentStarter.current && (chat?.messages||[]).length===0) {
-      sentStarter.current=true;
-      setTimeout(()=>sendMessage(initialSend),200);
-    }
-  },[]);
-
-  const handleKey=(e)=>{
-    if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage(input);}
-  };
-
-  const isTyping = streaming && (chat?.messages||[]).slice(-1)[0]?.content==="";
-
-  return (
-    <div className="chat-wrap">
-      <div className="chat-top">
-        <div className="chat-phase-info">
-          <span className="chat-phase-icon">{phInfo.icon}</span>
-          <div>
-            <div className="chat-phase-title">{phInfo.label}</div>
-            <div className="chat-phase-desc">{course}</div>
-          </div>
-        </div>
-        <div className="chat-actions">
-          <button className="chat-action-btn" onClick={onBack}>← New session</button>
-          <button className="chat-action-btn" onClick={()=>setChat({messages:[],started:false})}>Clear</button>
-        </div>
-      </div>
-
-      <div className="messages">
-        {(chat?.messages||[]).map((msg,i)=>(
-          <div key={i} className={`msg ${msg.role}`}>
-            <div className="msg-avatar">{msg.role==="user"?"👤":"🎓"}</div>
-            {msg.role==="user"
-              ?<div className="msg-bubble">{msg.content}</div>
-              :<MsgBubble content={msg.content}/>
-            }
-          </div>
-        ))}
-        {isTyping&&(
-          <div className="msg assistant">
-            <div className="msg-avatar">🎓</div>
-            <div className="msg-bubble">
-              <span className="typing-dot"/><span className="typing-dot"/><span className="typing-dot"/>
-            </div>
-          </div>
-        )}
-        {error&&<div className="err-msg">⚠️ {error}</div>}
-        <div ref={bottomRef}/>
-      </div>
-
-      <div className="input-bar">
-        <div className="input-row">
-          <textarea className="chat-inp" placeholder="Ask a follow-up, request practice problems, or go deeper…"
-            rows={1} value={input} onChange={e=>setInput(e.target.value)}
-            onKeyDown={handleKey} disabled={streaming||!apiKey}/>
-          <button className="send-btn" onClick={()=>sendMessage(input)} disabled={!input.trim()||streaming||!apiKey}>↑</button>
-        </div>
-        <div className="input-hint">Enter to send · Shift+Enter for new line</div>
       </div>
     </div>
   );
